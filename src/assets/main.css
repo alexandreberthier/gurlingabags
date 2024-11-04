@@ -1,0 +1,65 @@
+
+@font-face {
+    font-family: RobotoMono;
+    font-style: normal;
+    font-display: swap;
+    src: url("../assets/fonts/RobotoMono-Medium.ttf") format("truetype");
+}
+
+:root {
+    --white: #ffffff;
+    --light-gray: #e5e5e5;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: RobotoMono, sans-serif;
+}
+
+h1, h2, h3, h4, h5, p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+p, span {
+    font-size: 18px;
+}
+
+.image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.site-wrapper {
+    width: 320px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+@media (min-width: 740px) {
+    .site-wrapper {
+        width: 620px;
+
+    }
+}
+
+@media (min-width: 1200px) {
+    .site-wrapper {
+        width: 800px;
+
+    }
+}
+
+
+@media (min-width: 1440px) {
+    .site-wrapper {
+        width: 1100px;
+    }
+}

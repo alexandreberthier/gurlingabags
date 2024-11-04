@@ -9,7 +9,8 @@
 :root {
     --white: #ffffff;
     --light-gray: #e5e5e5;
-    --black: #000000
+    --black: #000000;
+    --dark-gray: #888888;
 }
 
 body, html {

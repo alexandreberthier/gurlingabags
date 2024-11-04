@@ -1,10 +1,21 @@
 <template>
   <div class="site-wrapper">
-    <h1>Details</h1>
     <div v-if="product" class="details-wrapper">
-      <h1>{{product.name}}</h1>
+      <div class="left-section">
+        <div class="image-wrapper">
+          <img :src="getImage(product.image)" :alt="`Bil der Tasche ${product.name}`">
+        </div>
+      </div>
+      <div class="right-section">
+        <div class="facts">
+          <h1>{{ product.name }}</h1>
+          <p>{{formatPrice(product.price)}}</p>
+          <DynamicButton text="In den Warenkorb"/>
+          <AccordionItem/>
+        </div>
+      </div>
     </div>
-   >
+
   </div>
 </template>
 
@@ -12,6 +23,10 @@
 import {useCentralStore} from "@/stores/central";
 import {computed, type ComputedRef} from "vue";
 import type {Product} from "@/interfaces/Global";
+import DynamicButton from "@/components/DynamicButton.vue";
+import {getImage} from "@/utils/ImageUtils";
+import {formatPrice} from "@/utils/FormatUtils";
+import AccordionItem from "@/components/AccordionItem.vue";
 
 const {id} = defineProps<{
   id: string
@@ -19,12 +34,43 @@ const {id} = defineProps<{
 
 const store = useCentralStore()
 
-const product: ComputedRef<Product | undefined> = computed(()=> {
+const product: ComputedRef<Product | undefined> = computed(() => {
   return store.products.find(product => product.id === id)
 })
 
 </script>
 
 <style scoped>
+
+.details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  .left-section {
+    .image-wrapper {
+      border: 1px solid var(--light-gray);
+      width: 100%;
+      height: 330px;
+
+      img {
+        width: 80%;
+        height: 80%;
+      }
+    }
+  }
+
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    .facts {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+}
 
 </style>

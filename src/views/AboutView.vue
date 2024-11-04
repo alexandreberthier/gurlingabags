@@ -1,6 +1,6 @@
 <template>
-  <div>
-About
+  <div class="site-wrapper">
+    <h1>Über uns</h1>
   </div>
 </template>
 

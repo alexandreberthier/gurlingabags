@@ -9,6 +9,7 @@
 :root {
     --white: #ffffff;
     --light-gray: #e5e5e5;
+    --black: #000000
 }
 
 body, html {
@@ -23,6 +24,7 @@ h1, h2, h3, h4, h5, p {
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 p, span {
@@ -40,13 +42,13 @@ p, span {
     margin: 50px auto;
     display: flex;
     flex-direction: column;
-    gap: 80px;
+    gap: 60px;
 }
 
 @media (min-width: 740px) {
     .site-wrapper {
         width: 620px;
-
+        gap: 80px;
     }
 }
 

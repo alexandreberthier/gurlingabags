@@ -9,6 +9,7 @@ import PersonalData from "@/views/checkout/PersonalData.vue";
 import DeliveryData from "@/views/checkout/DeliveryData.vue";
 import Payment from "@/views/checkout/Payment.vue";
 import OrderConfirmation from "@/views/checkout/OrderConfirmation.vue";
+import ProductDetails from "@/views/ProductDetails.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,12 @@ const router = createRouter({
       path: '/kontakt',
       name: 'contact',
       component: ContactView
+    },
+    {
+      path: '/details/:id',
+      name: 'details',
+      component: ProductDetails,
+      props: true
     },
     {
       path: '/faqs',

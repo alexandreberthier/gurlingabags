@@ -66,7 +66,7 @@ function toggleMenu(): void {
   showMenu.value = !showMenu.value
 }
 
-function closeMenu():void {
+function closeMenu(): void {
   showMenu.value = false
 }
 </script>
@@ -131,6 +131,7 @@ function closeMenu():void {
 
     .image-wrapper {
       position: relative;
+
       img {
         width: 30px;
         height: 30px;
@@ -212,6 +213,75 @@ function closeMenu():void {
         }
       }
     }
+  }
+}
+
+@media (min-width: 740px) {
+  .nav-wrapper {
+    height: 120px;
+    padding: 10px 30px;
+
+    .logo-section {
+      .image-wrapper {
+        img {
+          width: 130px;
+          height: auto;
+        }
+      }
+    }
+
+    .link-section {
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 26px;
+      height: unset;
+      width: 100%;
+      background-color: var(--light-gray);
+      transform: translateX(0);
+      padding: 0;
+      opacity: 1;
+
+
+      a {
+        color: black;
+
+        span {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .icon-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .hamburger-menu {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .nav-wrapper {
+    padding: 30px 60px;
+
+    .logo-section {
+      .image-wrapper {
+        img {
+          width: 140px;
+        }
+      }
+    }
+
+    .link-section {
+      gap: 32px;
+    }
+
   }
 }
 

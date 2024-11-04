@@ -20,8 +20,8 @@
     </div>
     <div class="icon-section">
       <div class="image-wrapper">
-        <div class="counter">
-          <p>1</p>
+        <div v-if="itemsCount > 0" class="counter">
+          <p>{{itemsCount}}</p>
         </div>
         <img :src="getImage('ic_cart.png')" alt="logo">
       </div>
@@ -37,9 +37,16 @@
 <script setup lang="ts">
 
 import {getImage} from "@/utils/ImageUtils";
-import {type Ref, ref} from "vue";
+import {computed, type Ref, ref} from "vue";
 import {SiteLinks} from "@/enums/SiteLinks";
 import type {Link} from "@/interfaces/Global";
+import {useCentralStore} from "@/stores/central";
+
+const store = useCentralStore()
+
+const itemsCount = computed(()=> {
+  return store.itemCountCart
+})
 
 const links: Ref<Link[]> = ref([
   {
@@ -131,6 +138,7 @@ function closeMenu(): void {
 
     .image-wrapper {
       position: relative;
+      cursor: pointer;
 
       img {
         width: 30px;

@@ -1,6 +1,6 @@
 import {ref, computed, useId} from 'vue'
 import {defineStore} from 'pinia'
-import type {Product} from "@/interfaces/Global";
+import type {AccordionContent, Product} from "@/interfaces/Global";
 import type {Ref} from "vue";
 
 export const useCentralStore = defineStore('central', () => {
@@ -63,21 +63,41 @@ export const useCentralStore = defineStore('central', () => {
         },
     ])
 
+    const accordionContent: Ref<AccordionContent[]> = ref([
+            {
+                id: 1,
+                header: "PRODUKTINFO",
+                hiddenContent: "Hier findest du alle Informationen zu unseren Produkten."
+            },
+            {
+                id: 2,
+                header: "RÜCKGABERECHT",
+                hiddenContent: "Sie können Artikel innerhalb von 30 Tagen zurückgeben, sofern sie unbenutzt sind."
+            },
+            {
+                id: 3,
+                header: "VERSANDRICHTLINIE",
+                hiddenContent: "Wir bieten kostenlosen Versand für Bestellungen über 50€. Weitere Details findest du hier."
+            }
+        ]
+    )
+
+
     const productsInCart: Ref<{ product: Product, quantity: number }[]> = ref([])
 
     const itemCountCart = computed(() => {
-       return  productsInCart.value.reduce((total, item) => {
+        return productsInCart.value.reduce((total, item) => {
             return total + item.quantity
         }, 0)
     })
 
-    const totalCartItemsPrice = computed(()=> {
-       return  productsInCart.value.reduce((total, item)=> {
+    const totalCartItemsPrice = computed(() => {
+        return productsInCart.value.reduce((total, item) => {
             return total + item.product.price * item.quantity
-        },0)
+        }, 0)
     })
 
     return {
-        products, itemCountCart, totalCartItemsPrice, productsInCart
+        products, itemCountCart, totalCartItemsPrice, productsInCart, accordionContent
     }
 })

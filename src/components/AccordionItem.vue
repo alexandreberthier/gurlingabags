@@ -1,29 +1,31 @@
 <template>
   <div class="item-wrapper">
     <div
-        @click="toggleContent"
+        @click="$emit('toggleContent')"
         class="visible-section">
-      <p>Info</p>
+      <p>{{ accordionContent.header }}</p>
       <div class="icon-wrapper">
         <img :src="getImage(showHiddenContent ? 'ic_minus.png' : 'ic_plus.png')" alt="icon">
       </div>
     </div>
     <div :class="['hidden-section', {'show': showHiddenContent}]">
-      <p>asdasdasdasdadsasd</p>
+      <p v-html="accordionContent.hiddenContent"></p>
     </div>
   </div>
 </template>
 
+
 <script setup lang="ts">
 
 import {getImage} from "@/utils/ImageUtils";
-import {ref} from "vue";
+import type {AccordionContent} from "@/interfaces/Global";
 
-const showHiddenContent = ref(false)
+const {accordionContent, showHiddenContent }  = defineProps<{
+  accordionContent: AccordionContent,
+  showHiddenContent: boolean
+}>()
 
-function toggleContent() {
-  showHiddenContent.value = !showHiddenContent.value
-}
+
 </script>
 
 <style scoped>
@@ -31,39 +33,38 @@ function toggleContent() {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-
-  .visible-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    box-sizing: border-box;
-    padding: 20px 0;
-
-    .icon-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
-
-  .hidden-section {
-    transform: translateY(-100%);
-    opacity: 0;
-    transition: all 300ms ease-in-out;
-    overflow: hidden;
-
-    &.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
 }
 
+.visible-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 10px 0;
+  user-select: none;
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrapper img {
+  width: 16px;
+  height: 16px;
+}
+
+.hidden-section {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease, opacity 150ms ease;
+}
+
+.hidden-section.show {
+  max-height: 500px;
+  opacity: 1;
+}
 </style>

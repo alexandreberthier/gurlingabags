@@ -11,7 +11,8 @@
           <h1>{{ product.name }}</h1>
           <p>{{formatPrice(product.price)}}</p>
           <DynamicButton text="In den Warenkorb"/>
-          <AccordionItem/>
+          <DynamicAccordion
+              :accordion-items="accordionItems"/>
         </div>
       </div>
     </div>
@@ -22,11 +23,12 @@
 <script setup lang="ts">
 import {useCentralStore} from "@/stores/central";
 import {computed, type ComputedRef} from "vue";
-import type {Product} from "@/interfaces/Global";
+import type {AccordionContent, Product} from "@/interfaces/Global";
 import DynamicButton from "@/components/DynamicButton.vue";
 import {getImage} from "@/utils/ImageUtils";
 import {formatPrice} from "@/utils/FormatUtils";
 import AccordionItem from "@/components/AccordionItem.vue";
+import DynamicAccordion from "@/components/DynamicAccordion.vue";
 
 const {id} = defineProps<{
   id: string
@@ -36,6 +38,10 @@ const store = useCentralStore()
 
 const product: ComputedRef<Product | undefined> = computed(() => {
   return store.products.find(product => product.id === id)
+})
+
+const accordionItems: ComputedRef<AccordionContent[]> = computed(()=> {
+  return store.accordionContent
 })
 
 </script>

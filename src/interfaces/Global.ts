@@ -9,5 +9,10 @@ export interface Product {
     desc: string,
     price: number,
     image:string
+}
 
+export interface AccordionContent {
+    id: number,
+    header: string,
+    hiddenContent: string
 }

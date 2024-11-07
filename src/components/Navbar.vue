@@ -116,6 +116,7 @@ function closeMenu(): void {
     padding: 50px;
     opacity: 0;
     transition: all 250ms ease-in-out;
+    z-index: 10;
 
     &.open {
       transform: translateX(0);

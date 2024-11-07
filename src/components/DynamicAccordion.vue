@@ -1,12 +1,17 @@
 <template>
   <div class="accordion-flex">
-    <AccordionItem
-        v-for="(item,index) in accordionItems"
-        :key="item.id"
-        :accordion-content="item"
-        :show-hidden-content="activeItem === item.id"
-        @toggleContent="toggleContent(item.id)"
-    />
+    <div class="wrapper"
+         :style="{ gap: activeItem === item.id ? '8px' : '0' }"
+         v-for="(item, index) in accordionItems">
+      <AccordionItem
+          :key="item.id"
+          :accordion-content="item"
+          :show-hidden-content="activeItem === item.id"
+          @toggleContent="toggleContent(item.id)"
+      />
+      <div v-if="index < accordionItems.length - 1"  class="divider"></div>
+    </div>
+
   </div>
 </template>
 
@@ -22,7 +27,7 @@ const {accordionItems} = defineProps<{
 
 const activeItem: Ref<number | null> = ref(null)
 
-function toggleContent(id: number){
+function toggleContent(id: number) {
   activeItem.value = activeItem.value === id ? null : id
 }
 </script>
@@ -33,6 +38,17 @@ function toggleContent(id: number){
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: var(--light-gray);
+    }
+  }
 }
 
 </style>

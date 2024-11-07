@@ -9,10 +9,23 @@
       <div class="right-section">
         <div class="facts">
           <h1>{{ product.name }}</h1>
-          <p>{{formatPrice(product.price)}}</p>
-          <DynamicButton text="In den Warenkorb"/>
+          <p>{{ formatPrice(product.price) }}</p>
+
+          <div class="button-wrapper">
+            <DynamicCartQuantity
+                :quantity="quantity"
+                @decrease="decreaseProductQuantity"
+                @increase="increaseProductQuantity"
+            />
+            <DynamicButton
+                @click="store.addProduct(product, quantity)"
+                text="In den Warenkorb"
+            />
+          </div>
+          <p>{{ product.desc }}</p>
           <DynamicAccordion
-              :accordion-items="accordionItems"/>
+              :accordion-items="accordionItems"
+          />
         </div>
       </div>
     </div>
@@ -22,13 +35,13 @@
 
 <script setup lang="ts">
 import {useCentralStore} from "@/stores/central";
-import {computed, type ComputedRef} from "vue";
+import {computed, type ComputedRef, type Ref, ref} from "vue";
 import type {AccordionContent, Product} from "@/interfaces/Global";
 import DynamicButton from "@/components/DynamicButton.vue";
 import {getImage} from "@/utils/ImageUtils";
 import {formatPrice} from "@/utils/FormatUtils";
-import AccordionItem from "@/components/AccordionItem.vue";
 import DynamicAccordion from "@/components/DynamicAccordion.vue";
+import DynamicCartQuantity from "@/components/DynamicCartQuantity.vue";
 
 const {id} = defineProps<{
   id: string
@@ -40,9 +53,23 @@ const product: ComputedRef<Product | undefined> = computed(() => {
   return store.products.find(product => product.id === id)
 })
 
-const accordionItems: ComputedRef<AccordionContent[]> = computed(()=> {
+const accordionItems: ComputedRef<AccordionContent[]> = computed(() => {
   return store.accordionContent
 })
+
+const quantity: Ref<number> = ref(1)
+
+function increaseProductQuantity() {
+  if (quantity.value < 5) {
+    quantity.value++
+  }
+}
+
+function decreaseProductQuantity() {
+  if (quantity.value > 1) {
+    quantity.value--
+  }
+}
 
 </script>
 
@@ -75,8 +102,82 @@ const accordionItems: ComputedRef<AccordionContent[]> = computed(()=> {
       display: flex;
       flex-direction: column;
       gap: 16px;
+
+      .button-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
     }
   }
 }
+
+@media (min-width: 740px) {
+  .details-wrapper {
+    .left-section {
+      .image-wrapper {
+        img {
+          height: 80%;
+          width: auto;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .details-wrapper {
+    flex-direction: row;
+    .left-section {
+      width: 50%;
+      .image-wrapper {
+        width: 100%;
+        height: 500px;
+
+        img {
+          width: auto;
+          height: 80%;
+        }
+      }
+    }
+
+    .right-section {
+      width: 50%;
+      .facts {
+        gap: 32px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1440px) {
+  .details-wrapper {
+    flex-direction: row;
+    .left-section {
+      width: 40%;
+      .image-wrapper {
+        width: 100%;
+        height: 550px;
+
+        img {
+          width: auto;
+          height: 80%;
+        }
+      }
+    }
+
+    .right-section {
+      width: 60%;
+      .facts {
+        gap: 32px;
+
+        .button-wrapper {
+          width: 320px;
+        }
+      }
+    }
+  }
+}
+
 
 </style>

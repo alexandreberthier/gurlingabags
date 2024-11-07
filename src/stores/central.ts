@@ -97,7 +97,21 @@ export const useCentralStore = defineStore('central', () => {
         }, 0)
     })
 
+    function addProduct(product: Product, quantity: number) {
+        const existingProductIndex = productsInCart.value.findIndex(item => item.product.id === product.id)
+
+        if (existingProductIndex !== -1) {
+            productsInCart.value[existingProductIndex].quantity += quantity
+        } else {
+            productsInCart.value.push({
+                product,
+                quantity
+            })
+        }
+    }
+
+
     return {
-        products, itemCountCart, totalCartItemsPrice, productsInCart, accordionContent
+        products, itemCountCart, totalCartItemsPrice, productsInCart, accordionContent, addProduct
     }
 })
